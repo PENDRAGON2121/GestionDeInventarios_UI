@@ -1,0 +1,58 @@
+﻿@model GestionDeInventarios.Model.Ventas
+
+@{
+    ViewData["Title"] = "Aplicación de Descuento";
+}
+
+<h1>Aplicación de Descuento</h1>
+
+<h4>Ventas</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="DescuentoYPago">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="NombreCliente" />
+            <input type="hidden" asp-for="Fecha" />
+
+            <div class="form-group">
+                <label asp-for="TipoDePago" class="control-label">Tipo de Pago</label>
+                <select asp-for="TipoDePago" class="form-control">
+                    @foreach (var item in Enum.GetValues(typeof(GestionDeInventarios.Model.TipoDePago)))
+                    {
+                        <option value="@item">@item</option>
+                    }
+                </select>
+                <span asp-validation-for="TipoDePago" class="text-danger"></span>
+            </div>
+
+            <input type="hidden" asp-for="Total" />
+            <input type="hidden" asp-for="SubTotal" />
+
+            <div class="form-group">
+                <label asp-for="PorcentajeDescuento" class="control-label">Porcentaje de Descuento</label>
+                <input asp-for="PorcentajeDescuento" class="form-control" />
+                <span asp-validation-for="PorcentajeDescuento" class="text-danger"></span>
+            </div>
+
+            <input type="hidden" asp-for="MontoDescuento" />
+            <input type="hidden" asp-for="UserId" />
+            <input type="hidden" asp-for="Estado" />
+            <input type="hidden" asp-for="IdAperturaDeCaja" />
+
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Regresar al Listado</a>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

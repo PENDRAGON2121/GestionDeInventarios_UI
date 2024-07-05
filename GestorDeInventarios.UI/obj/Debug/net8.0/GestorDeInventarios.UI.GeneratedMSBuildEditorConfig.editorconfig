@@ -1,0 +1,147 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = GestorDeInventarios.UI
+build_property.RootNamespace = GestorDeInventarios.UI
+build_property.ProjectDir = C:\Users\mquir\source\repos\GestorDeInventarioFront\GestorDeInventario_FrontEnd\GestorDeInventarios.UI\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\mquir\source\repos\GestorDeInventarioFront\GestorDeInventario_FrontEnd\GestorDeInventarios.UI
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/AjusteDeInventario/CrearNuevoAjuste.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWp1c3RlRGVJbnZlbnRhcmlvXENyZWFyTnVldm9BanVzdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/AjusteDeInventario/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWp1c3RlRGVJbnZlbnRhcmlvXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/AjusteDeInventario/DetalleDeInventario.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWp1c3RlRGVJbnZlbnRhcmlvXERldGFsbGVEZUludmVudGFyaW8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/AjusteDeInventario/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWp1c3RlRGVJbnZlbnRhcmlvXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/AjusteDeInventario/ListadoDeAjustes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWp1c3RlRGVJbnZlbnRhcmlvXExpc3RhZG9EZUFqdXN0ZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/AperturaDeCaja/AcumuladoDeVentas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBlcnR1cmFEZUNhamFcQWN1bXVsYWRvRGVWZW50YXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/AperturaDeCaja/CerrarLaCaja.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBlcnR1cmFEZUNhamFcQ2VycmFyTGFDYWphLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/AperturaDeCaja/CrearAperturaDeCaja.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBlcnR1cmFEZUNhamFcQ3JlYXJBcGVydHVyYURlQ2FqYS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/AperturaDeCaja/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBlcnR1cmFEZUNhamFcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/Inventarios/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW52ZW50YXJpb3NcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/Inventarios/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW52ZW50YXJpb3NcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/Inventarios/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW52ZW50YXJpb3NcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/Inventarios/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW52ZW50YXJpb3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/Login/ActualizarDatosDelUsuario.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cQWN0dWFsaXphckRhdG9zRGVsVXN1YXJpby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/Login/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/Login/Registro.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cUmVnaXN0cm8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/Ventas/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVudGFzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/Ventas/DescuentoYPago.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVudGFzXERlc2N1ZW50b1lQYWdvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/Ventas/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVudGFzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/Ventas/MostrarCarrito.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVudGFzXE1vc3RyYXJDYXJyaXRvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/Ventas/MostrarInventario.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVudGFzXE1vc3RyYXJJbnZlbnRhcmlvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/Ventas/Terminar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVudGFzXFRlcm1pbmFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mquir/source/repos/GestorDeInventarioFront/GestorDeInventario_FrontEnd/GestorDeInventarios.UI/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-d9en0xs6wh

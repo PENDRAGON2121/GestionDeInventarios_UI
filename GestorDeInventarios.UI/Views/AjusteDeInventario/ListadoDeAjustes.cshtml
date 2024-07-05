@@ -1,0 +1,59 @@
+﻿@model IEnumerable<GestionDeInventarios.Model.AjusteDeInventario>
+
+@{
+    ViewData["Title"] = "LaListaDeAjustes";
+    var NombreDelUsuario = ViewBag.Nombre as String;
+}
+
+<h1>Lista De Ajustes</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CantidadActual)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ajuste)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                Nombre Del Usuario
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CantidadActual)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tipo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ajuste)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha)
+                </td>
+                <td>
+                    @NombreDelUsuario
+                </td>
+
+                <td>
+
+                    @Html.ActionLink("Detalle", "Details", new { id = item.Id })
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

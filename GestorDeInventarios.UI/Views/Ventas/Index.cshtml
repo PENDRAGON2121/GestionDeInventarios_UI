@@ -1,0 +1,51 @@
+﻿@model IEnumerable<GestionDeInventarios.Model.Ventas>
+
+@{
+    ViewData["Title"] = "Lista de Ventas";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear Venta</a>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Cliente</th>
+                <th>Fecha</th>
+                <th>Tipo de Pago</th>
+                <th>Total</th>
+                <th>Subtotal</th>
+                <th>% Descuento</th>
+                <th>Monto Descuento</th>
+                <th>Usuario</th>
+                <th>Estado</th>
+                <th>Apertura de Caja</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var venta in Model)
+            {
+                <tr>
+                    <td>@venta.NombreCliente</td>
+                    <td>@venta.Fecha.ToShortDateString()</td>
+                    <td>@venta.TipoDePago</td>
+                    <td>@venta.Total.ToString("C")</td>
+                    <td>@venta.SubTotal.ToString("C")</td>
+                    <td>@venta.PorcentajeDescuento.ToString("0.##")%</td>
+                    <td>@venta.MontoDescuento.ToString("C")</td>
+                    <td>@venta.UserId</td>
+                    <td>@venta.Estado</td>
+                    <td>@venta.IdAperturaDeCaja</td>
+                    <td>
+                        <a asp-action="MostrarCarrito" asp-route-ventaId="@venta.Id" class="btn btn-info">Mostrar carrito</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,93 @@
+﻿@model IEnumerable<GestionDeInventarios.Model.Inventario>
+
+@{
+    ViewData["Title"] = "MostrarCarrito";
+}
+
+<h1>Mostrar Carrito</h1>
+
+<p>
+    <a asp-action="MostrarInventario" data-venta-id="@ViewData["IdVenta"]" class="btn btn-primary">Seleccionar desde el inventario</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Id)</th>
+            <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+            <th>@Html.DisplayNameFor(model => model.Categoria)</th>
+            <th>@Html.DisplayNameFor(model => model.Cantidad)</th>
+            <th>@Html.DisplayNameFor(model => model.Precio)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                <td>@Html.DisplayFor(modelItem => item.Categoria)</td>
+                <td>@Html.EditorFor(modelItem => item.Cantidad, new { htmlAttributes = new { @class = "form-control quantity-input", type = "number", min = "1" } })</td>
+                <td><span class="price-display" data-price="@item.Precio">@item.Precio</span></td>
+                <td>
+                    @Html.ActionLink("Eliminar del Carrito", "BorrarDelCarrito", new { id = item.Id }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button class="btn btn-success terminar-venta" data-venta-id="@ViewData["IdVenta"]">Terminar Venta</button>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.quantity-input').on('input', function () {
+                var quantity = $(this).val();
+                var priceElement = $(this).closest('tr').find('.price-display');
+                var price = parseFloat(priceElement.data('price'));
+                var totalPrice = price * parseInt(quantity);
+                priceElement.text(totalPrice.toFixed(2));
+            });
+
+            $('.terminar-venta').click(function () {
+                var ventaId = $(this).data('venta-id');
+                var carritoCompras = @Html.Raw(Json.Serialize(Model));
+                var listaCantidades = obtenerCarritoCompras();
+                console.log(listaCantidades);
+                terminarVenta(ventaId, carritoCompras, listaCantidades);
+            });
+        });
+        function obtenerCarritoCompras() {
+            var listaCantidades = [];
+
+            // Recorre cada fila de la tabla
+            $('tbody tr').each(function () {
+                var cantidad = parseInt($(this).find('.quantity-input').val());
+                listaCantidades.push(cantidad);
+            });
+
+            return listaCantidades;
+        }
+        function terminarVenta(ventaId, carritoCompras, listaCantidades) {
+            $.ajax({
+                url: '/ventas/TerminarVenta',
+                type: 'POST',
+                data: {
+                    ventaId: ventaId,
+                    carritoCompras: carritoCompras,
+                    listaCantidades: listaCantidades
+                },
+                success: function (response) {
+                    alert('El Carrito se proceso correctamente.');
+                    window.location.href = '/ventas/DescuentoYPago';
+                },
+                error: function () {
+                    alert('Error al terminar la venta.');
+                }
+            });
+        }
+    </script>
+}

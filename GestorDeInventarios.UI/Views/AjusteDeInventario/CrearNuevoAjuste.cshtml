@@ -1,0 +1,61 @@
+﻿@model GestionDeInventarios.Model.AjusteDeInventario
+@{
+    ViewData["Title"] = "CrearNuevoAjuste";
+}
+
+<h1>Ajuste Del Inventario</h1>
+
+<h4>Generar un nuevo ajuste</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CrearNuevoAjuste">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CantidadActual" class="control-label"></label>
+                <input asp-for="CantidadActual" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="Ajuste" class="control-label"></label>
+                <input asp-for="Ajuste" class="form-control" />
+                <span asp-validation-for="Ajuste" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tipo" class="control-label"></label>
+                <select asp-for="Tipo" asp-items="Html.GetEnumSelectList<GestionDeInventarios.Model.TipoDeAjuste>()">
+                </select>
+                <span asp-validation-for="Tipo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Observaciones" class="control-label"></label>
+                <input asp-for="Observaciones" class="form-control" />
+                <span asp-validation-for="Observaciones" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Id_Inventario" class="control-label"></label>
+                <input asp-for="Id_Inventario" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="Fecha" class="control-label"></label>
+                <input asp-for="Fecha" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Regresar</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

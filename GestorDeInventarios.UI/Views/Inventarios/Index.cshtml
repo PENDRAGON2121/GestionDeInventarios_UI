@@ -1,0 +1,52 @@
+﻿@model IEnumerable<GestionDeInventarios.Model.Inventario>
+
+@{
+    ViewData["Title"] = "Manejo de Inventario";
+}
+
+<div class="container mt-5">
+    <h1 class="mb-4">@ViewData["Title"]</h1>
+
+    <form asp-controller="Inventarios" asp-action="Index" method="get" class="mb-4">
+        <div class="form-group row">
+            <label for="nombre" class="col-sm-2 col-form-label">Nombre:</label>
+            <div class="col-sm-8">
+                <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Ingrese el nombre del inventario" />
+            </div>
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+            </div>
+        </div>
+    </form>
+
+    <p>
+        <a asp-action="Create" class="btn btn-success mb-3">Agregar al Inventario</a>
+    </p>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+                <th>@Html.DisplayNameFor(model => model.Categoria)</th>
+                <th>@Html.DisplayNameFor(model => model.Cantidad)</th>
+                <th>@Html.DisplayNameFor(model => model.Precio)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Categoria)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Cantidad)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Precio)</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Editar</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Detalles</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

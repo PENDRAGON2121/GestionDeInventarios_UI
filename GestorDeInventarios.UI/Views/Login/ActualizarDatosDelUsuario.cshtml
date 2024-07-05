@@ -1,0 +1,51 @@
+﻿@model GestionDeInventarios.Model.UsuarioActualizado
+
+@{
+    ViewData["Title"] = "Actualizar Datos del Usuario";
+}
+
+<div class="container mt-5">
+    <h1 class="mb-4">@ViewData["Title"]</h1>
+
+    <h4 class="mb-3">Actualizar Información del Usuario</h4>
+    <hr />
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="ActualizarDatosDelUsuario" class="bg-light p-4 rounded shadow-sm">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Nombre" class="form-label"></label>
+                    <input asp-for="Nombre" class="form-control" value="@ViewBag.Username" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Clave" class="form-label">Clave Nueva</label>
+                    <input asp-for="Clave" type="password" class="form-control" />
+                    <span asp-validation-for="Clave" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="ConfirmarClave" class="form-label">Confirmar la Clave Nueva</label>
+                    <input asp-for="ConfirmarClave" type="password" class="form-control" />
+                    <span asp-validation-for="ConfirmarClave" class="text-danger"></span>
+                </div>
+
+                <div class="d-grid">
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="mt-4 text-center">
+        <a asp-action="Index" class="btn btn-secondary">Volver a la Lista</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

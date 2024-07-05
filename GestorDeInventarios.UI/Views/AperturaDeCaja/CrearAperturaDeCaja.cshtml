@@ -1,0 +1,47 @@
+﻿@model GestionDeInventarios.Model.AperturaDeCajaNueva
+
+@{
+    ViewData["Title"] = "CrearAperturaDeCaja";
+}
+
+<h1>EFECTUAR APERTURA DE CAJA</h1>
+
+<h4>DATOS DE APERTURA</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CrearAperturaDeCaja">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mt-2">
+                <label asp-for="UserId" class="control-label">USUARIO</label>
+                <input asp-for="UserId" class="form-control" readonly />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="FechaDeInicio" class="control-label">FECHA DE APERTURA</label>
+                <input asp-for="FechaDeInicio" class="form-control" readonly />
+                <span asp-validation-for="FechaDeInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="Estado" class="control-label">NUEVO ESTADO</label>
+                <input asp-for="Estado" class="form-control" readonly />
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <input type="submit" value="VALIDAR APERTURA" class="btn btn-primary mr-2 mb-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index" style="display: inline-block; padding: 10px 20px; background-color: #00b3b3; color: white; text-decoration: none; border-radius: 4px;">Regresar</a>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

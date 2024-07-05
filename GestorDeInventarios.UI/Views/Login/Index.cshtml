@@ -1,0 +1,145 @@
+﻿@model UsuarioSesion
+    
+@{
+    ViewData["Title"] = "Login";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            background-color: #e5f2ff; 
+            font-family: Arial, sans-serif;
+        }
+
+        .card {
+            border-radius: 15px; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+        }
+
+        .card-header {
+            border-radius: 15px 15px 0 0; 
+            background-color: #4a90e2; 
+            color: #fff; 
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #4a90e2; 
+            padding: 10px;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            border-radius: 8px;
+            padding: 12px 24px; 
+            font-weight: bold;
+            text-transform: uppercase; 
+            transition: all 0.3s ease; 
+        }
+
+        .btn-primary {
+            background-color: #00cc99; 
+            border-color: #00cc99;
+        }
+
+        .btn-secondary {
+            background-color: rgb(67, 56, 202);
+            border-color: rgb(67, 56, 200);
+        }
+
+            .btn-primary:hover,
+            .btn-secondary:hover {
+                opacity: 0.8;
+            }
+
+        .text-white {
+            color: #fff;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="text-center">GESTION DE INVENTARIO</h1>
+
+    <div class="container d-flex justify-content-center">
+        <div class="card shadow border-0" style="width: 75%;">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h2 class="text-white">Inicio De Sesion</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body p-4">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <form asp-action="Index">
+                    <div class="border p-4 mt-2">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Usuario</label>
+                            <input asp-for="Correo" class="form-control" />
+                            <span asp-validation-for="Correo" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Clave</label>
+                            <input asp-for="Clave" class="form-control" type="password" />
+                            <span asp-validation-for="Clave" class="text-danger"></span>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit"class="btn btn-primary">Iniciar Sesión</button>
+                        </div>
+                    </div>
+                </form>
+                <h5>No tienes una cuenta?<a asp-action="Registro">Registrate</a></h5>
+                
+                <div class="row mt-4">
+                    <div class="col-12 text-center">
+                        <a asp-controller="Login" asp-action="LoginGoogle" class="btn btn-secondary d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512" width="20" height="20" style="margin-right: 8px;" >
+                                <path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z" />
+                             </svg>
+                             -
+                             Sign In with Google
+                        </a>
+                    </div>
+                    <div class="col-12 text-center mt-2">
+                        <a asp-controller="Login" asp-action="LoginFacebook" class="btn btn-secondary d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512" width="20" height="20" style="margin-right: 8px;">
+                                <path d="M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z" />
+                            </svg>
+                            -
+                             Sign In with Facebook
+                        </a>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNetCore.Authentication.Cookies
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<ul class="navbar-nav">
+    @if (HttpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+    {
+        var userId = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Inventarios" asp-action="Index">Catalogo del Inventarios</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="AjusteDeInventario" asp-action="Index">Catalogo de Ajustes</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="AperturaDeCaja" asp-action="Index">Apertura de Caja</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Ventas" asp-action="Index">Manejo de Ventas</a>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-dark" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="20" height="20"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" /></svg>
+                @HttpContextAccessor.HttpContext.User.Identity.Name
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                @if (string.IsNullOrEmpty(userId))
+                {
+                    <a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="ActualizarDatosDelUsuario">Cambiar Clave</a>
+                    <div class="dropdown-divider"></div>
+
+                }
+                <form class="form-inline" asp-area="" asp-controller="Login" asp-action="Logout">
+                    <button type="submit" class="dropdown-item">Cerrar Sesion</button>
+                </form>
+            </div>
+        </li>
+
+    }
+</ul>

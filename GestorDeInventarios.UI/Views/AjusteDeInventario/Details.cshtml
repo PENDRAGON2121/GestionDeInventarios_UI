@@ -1,0 +1,58 @@
+﻿@model GestionDeInventarios.Model.AjusteDeInventario
+
+@{
+    ViewData["Title"] = "Detalles del Ajuste de Inventario";
+}
+
+<div class="container mt-5">
+    <h1 class="mb-4">@ViewData["Title"]</h1>
+
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Ajuste de Inventario</h4>
+        </div>
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.CantidadActual)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.CantidadActual)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Ajuste)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Ajuste)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Tipo)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Tipo)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Observaciones)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Observaciones)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Fecha)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Fecha)
+                </dd>
+                <dt class="col-sm-4">
+                    Usuario
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.UserId)
+                </dd>
+            </dl>
+        </div>
+        <div class="card-footer text-center">
+            <a asp-action="Index" class="btn btn-secondary">Volver a la Lista</a>
+        </div>
+    </div>
+</div>
