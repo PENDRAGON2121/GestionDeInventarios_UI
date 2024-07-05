@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GestorDeInventarios.UI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0b76c458667f5b054a35935c5291975a0c637a24")]
 [assembly: System.Reflection.AssemblyProductAttribute("GestorDeInventarios.UI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GestorDeInventarios.UI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

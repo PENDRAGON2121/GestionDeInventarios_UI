@@ -12,13 +12,6 @@ namespace GestorDeInventario.UI.Controllers
 {
     public class AjusteDeInventarioController : Controller
     {
-        private readonly AdministracionDeInventario _GestionDeInventarios;
-
-
-        public AjusteDeInventarioController(DbGestionDeInventario conexion)
-        {
-            _GestionDeInventarios = new AdministracionDeInventario(conexion);
-        }
 
         public async Task<ActionResult> Index(string nombre)
         {
@@ -145,19 +138,22 @@ namespace GestorDeInventario.UI.Controllers
                 var httpClient = new HttpClient();
                 String usuario = User.Identity.Name;
                 var resp = await httpClient.GetAsync($"https://localhost:7218/api/AjusteDelInventario/ObtenerIdPorNombre/{usuario}");
-                var nombre = await resp.Content.ReadAsStringAsync();
+                var idDelUsuario = await resp.Content.ReadAsStringAsync();
 
-
-                //int UserId = _GestionDeInventarios.BusqueElIdDelUsuarioPorNombre(User.Identity.Name);
+                
 
                 var ajuste = new GestionDeInventarios.Model.AjusteDeInventario
                 {
 
-                    UserId = nombre
-                }; 
+                    UserId = idDelUsuario
+                };
 
 
-                inventarios = _GestionDeInventarios.ObtengaElInventarioPorIdentificacion(ajusteDeInventarios.Id);
+                int idDelinventario = ajusteDeInventarios.Id;
+                var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/Inventario/{idDelinventario}");
+                string apiResponse = await respuesta.Content.ReadAsStringAsync();
+                inventarios = JsonConvert.DeserializeObject<GestionDeInventarios.Model.Inventario>(apiResponse);
+
 
 
                 ajusteDeInventariosAgregar.Id_Inventario = inventarios.Id;
@@ -168,7 +164,15 @@ namespace GestorDeInventario.UI.Controllers
                 ajusteDeInventariosAgregar.Fecha = DateTime.Now;
                 ajusteDeInventariosAgregar.UserId = ajuste.UserId;
 
-                _GestionDeInventarios.RegistreUnAjusteDeInventario(ajusteDeInventariosAgregar);
+
+
+
+                string json = JsonConvert.SerializeObject(ajusteDeInventariosAgregar);
+                var buffer = System.Text.Encoding.UTF8.GetBytes(json);
+                var byteContent = new ByteArrayContent(buffer);
+                byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                await httpClient.PostAsync("https://localhost:7218/api/AjusteDelInventario", byteContent);
+                
                 return RedirectToAction(nameof(Index));
             }
             catch

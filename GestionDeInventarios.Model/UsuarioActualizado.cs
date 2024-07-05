@@ -20,7 +20,6 @@ namespace GestionDeInventarios.Model
         [Compare("Clave", ErrorMessage = "Las Claves No Coinciden.")]
         public required string ConfirmarClave { get; set; }
 
-        //TODO: probar
         public String? Correo { get; set; }
         public String? NombreDelUsuario { get; set; }
 
