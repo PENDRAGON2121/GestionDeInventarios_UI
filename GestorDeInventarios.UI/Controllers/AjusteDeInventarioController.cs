@@ -13,13 +13,11 @@ namespace GestorDeInventario.UI.Controllers
     public class AjusteDeInventarioController : Controller
     {
         private readonly AdministracionDeInventario _GestionDeInventarios;
-        private readonly IAdministradorDeUsuarios _administradorDeUsuarios;
 
 
         public AjusteDeInventarioController(DbGestionDeInventario conexion)
         {
             _GestionDeInventarios = new AdministracionDeInventario(conexion);
-            _administradorDeUsuarios = new AdministradorDeUsuarios(conexion);
         }
 
         public async Task<ActionResult> Index(string nombre)
@@ -136,7 +134,7 @@ namespace GestorDeInventario.UI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CrearNuevoAjuste(AjusteDeInventario ajusteDeInventarios)
+        public async Task<ActionResult> CrearNuevoAjuste(AjusteDeInventario ajusteDeInventarios)
         {
             GestionDeInventarios.Model.Inventario inventarios;
             GestionDeInventarios.Model.AjusteDeInventario ajusteDeInventariosAgregar = new GestionDeInventarios.Model.AjusteDeInventario();
@@ -144,13 +142,19 @@ namespace GestorDeInventario.UI.Controllers
 
             try
             {
-                int UserId = _GestionDeInventarios.BusqueElIdDelUsuarioPorNombre(User.Identity.Name);
+                var httpClient = new HttpClient();
+                String usuario = User.Identity.Name;
+                var resp = await httpClient.GetAsync($"https://localhost:7218/api/AjusteDelInventario/ObtenerIdPorNombre/{usuario}");
+                var nombre = await resp.Content.ReadAsStringAsync();
+
+
+                //int UserId = _GestionDeInventarios.BusqueElIdDelUsuarioPorNombre(User.Identity.Name);
 
                 var ajuste = new GestionDeInventarios.Model.AjusteDeInventario
                 {
 
-                    UserId = UserId.ToString()
-                };
+                    UserId = nombre
+                }; 
 
 
                 inventarios = _GestionDeInventarios.ObtengaElInventarioPorIdentificacion(ajusteDeInventarios.Id);
