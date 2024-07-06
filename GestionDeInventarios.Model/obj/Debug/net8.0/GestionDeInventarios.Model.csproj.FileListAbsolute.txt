@@ -70,3 +70,4 @@ C:\Users\mquir\source\repos\GestorDeInventarioFront\GestorDeInventario_FrontEnd\
 C:\Users\mquir\source\repos\GestorDeInventarioFront\GestorDeInventario_FrontEnd\GestionDeInventarios.Model\obj\Debug\net8.0\refint\GestionDeInventarios.Model.dll
 C:\Users\mquir\source\repos\GestorDeInventarioFront\GestorDeInventario_FrontEnd\GestionDeInventarios.Model\obj\Debug\net8.0\GestionDeInventarios.Model.pdb
 C:\Users\mquir\source\repos\GestorDeInventarioFront\GestorDeInventario_FrontEnd\GestionDeInventarios.Model\obj\Debug\net8.0\ref\GestionDeInventarios.Model.dll
+C:\Users\mquir\source\repos\GestorDeInventarioFront\GestorDeInventario_FrontEnd\GestionDeInventarios.Model\obj\Debug\net8.0\GestionDeInventarios.Model.sourcelink.json

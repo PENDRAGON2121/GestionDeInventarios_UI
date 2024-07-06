@@ -3,21 +3,14 @@ using GestionDeInventario.DA;
 using GestionDeInventarios.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace GestorDeInventario.UI.Controllers
 {
     public class AperturaDeCajaController : Controller
     {
-        private readonly AdministracionDeInventario _GestionDeInventarios;
-        private readonly IAdministradorDeUsuarios _administradorDeUsuarios;
 
-        public AperturaDeCajaController(DbGestionDeInventario conexion)
-        {
-            _GestionDeInventarios = new AdministracionDeInventario(conexion);
-            _administradorDeUsuarios = new AdministradorDeUsuarios(conexion);
-        }
-
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var ajuste = new GestionDeInventarios.Model.AperturaDeCajaNueva
             {
@@ -30,8 +23,26 @@ namespace GestorDeInventario.UI.Controllers
                 ViewBag.Mensaje = TempData["Mensaje"].ToString();
             }
 
-            ViewBag.EstaLaCajaAbierta = _GestionDeInventarios.TieneAperturaDeCaja(ajuste.UserId);
-            var laListaDelInventario = _GestionDeInventarios.ObtengaLaListaDeCajas();
+            
+
+            HttpClient httpClient = new HttpClient();
+            var resp = await httpClient.GetAsync($"https://localhost:7218/api/AperturaDeCaja/TieneApertura/{ajuste.UserId}");
+            string apertura = await resp.Content.ReadAsStringAsync();
+
+            Boolean tieneApertura = bool.Parse(apertura);
+            
+            ViewBag.EstaLaCajaAbierta = tieneApertura;
+
+
+            
+            List<AperturaDeLaCaja> laListaDelInventario;
+
+            var respuesta = await httpClient.GetAsync("https://localhost:7218/api/AperturaDeCaja");
+            string apiResponse = await respuesta.Content.ReadAsStringAsync();
+            laListaDelInventario = JsonConvert.DeserializeObject<List<AperturaDeLaCaja>>(apiResponse);
+
+            
+            
             if (laListaDelInventario.Count == 0)
             {
                 return RedirectToAction("CrearAperturaDeCaja");
@@ -65,7 +76,7 @@ namespace GestorDeInventario.UI.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CrearAperturaDeCaja(AperturaDeCajaNueva apertura)
+        public async Task<ActionResult> CrearAperturaDeCaja(AperturaDeCajaNueva apertura)
         {
             try
             {
@@ -80,7 +91,15 @@ namespace GestorDeInventario.UI.Controllers
                 aperturasDeCaja.FechaDeInicio = DateTime.Now;
                 aperturasDeCaja.Estado = EstadoDeCaja.Abierta;
 
-                _GestionDeInventarios.RegistreUnaAperturaDeCaja(aperturasDeCaja);
+
+                var httpClient = new HttpClient();
+
+                string json = JsonConvert.SerializeObject(aperturasDeCaja);
+                var buffer = System.Text.Encoding.UTF8.GetBytes(json);
+                var byteContent = new ByteArrayContent(buffer);
+                byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                var respuesta = await httpClient.PostAsync("https://localhost:7218/api/AperturaDeCaja", byteContent);
+
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -88,33 +107,46 @@ namespace GestorDeInventario.UI.Controllers
                 return View();
             }
         }
-        public ActionResult CerrarLaCaja(int Id)
-        {
-            var caja = _GestionDeInventarios.ObtengaLaAperturaDeCajasPorIdentificacion(Id);
 
-            return View("CerrarCaja", caja);
+        public async Task<ActionResult> CerrarLaCaja(int Id)
+        {
+
+            var httpClient = new HttpClient();
+            var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/AperturaDeCaja/{Id}");
+            string apiResponse = await respuesta.Content.ReadAsStringAsync();
+            AperturaDeLaCaja apertura = JsonConvert.DeserializeObject<AperturaDeLaCaja>(apiResponse);
+
+            return View("CerrarCaja", apertura);
 
         }
         [HttpPost]
-        public ActionResult CerrarLaCaja()
+        public async Task<ActionResult> CerrarLaCaja()
         {
-            var ultimoRegistro = _GestionDeInventarios.ObtengaLaUltimaAperturaDeCaja();
+            var httpClient = new HttpClient();
+            var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/AperturaDeCaja/UltimaApertura");
+            string apiResponse = await respuesta.Content.ReadAsStringAsync();
+            AperturaDeLaCaja apertura = JsonConvert.DeserializeObject<AperturaDeLaCaja>(apiResponse);
+
+            var ultimoRegistro = apertura;
             return View("CerrarLaCaja", ultimoRegistro);
 
         }
 
-        public ActionResult AcumuladoDeVentas(int id)
+        public async Task<ActionResult> AcumuladoDeVentas(int id)
         {
             AcumuladoDeVentas acumulado;
 
-            acumulado = _GestionDeInventarios.ObtengaElAcumuladoDeCaja(id);
-
+            var httpClient = new HttpClient();
+            var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/AperturaDeCaja/AcumuladoDeLaCaja/{id}");
+            string apiResponse = await respuesta.Content.ReadAsStringAsync();
+            acumulado = JsonConvert.DeserializeObject<AcumuladoDeVentas>(apiResponse);
 
             return View("AcumuladoDeVentas", acumulado);
         }
-        public ActionResult validarCierre(int id)
+        public async Task<ActionResult> validarCierre(int id)
         {
-            _GestionDeInventarios.CerrarUnaCaja();
+            var httpClient = new HttpClient();
+            var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/AperturaDeCaja/CierreDeCaja");
             return RedirectToAction("Index");
 
 
