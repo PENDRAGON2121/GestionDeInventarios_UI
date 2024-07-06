@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using GestionDeInventarios.Model;
+﻿using GestionDeInventarios.Model;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Net.Http;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace GestorDeInventario.UI.Controllers
 {

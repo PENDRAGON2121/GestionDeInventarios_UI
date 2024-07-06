@@ -15,8 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GestionDeInventario.BL\GestionDeInventario.BL.csproj" />
-    <ProjectReference Include="..\GestionDeInventario.DA\GestionDeInventario.DA.csproj" />
     <ProjectReference Include="..\GestionDeInventarios.Model\GestionDeInventarios.Model.csproj" />
   </ItemGroup>
 

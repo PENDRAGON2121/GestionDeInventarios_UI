@@ -1,7 +1,4 @@
-﻿using GestionDeInventario.BL;
-using GestionDeInventario.DA;
-using GestionDeInventarios.Model;
-using Microsoft.AspNetCore.Http;
+﻿using GestionDeInventarios.Model;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -23,8 +20,6 @@ namespace GestorDeInventario.UI.Controllers
                 ViewBag.Mensaje = TempData["Mensaje"].ToString();
             }
 
-            
-
             HttpClient httpClient = new HttpClient();
             var resp = await httpClient.GetAsync($"https://localhost:7218/api/AperturaDeCaja/TieneApertura/{ajuste.UserId}");
             string apertura = await resp.Content.ReadAsStringAsync();
@@ -43,14 +38,8 @@ namespace GestorDeInventario.UI.Controllers
 
             
             
-            if (laListaDelInventario.Count == 0)
-            {
-                return RedirectToAction("CrearAperturaDeCaja");
-            }
-            else
-            {
                 return View(laListaDelInventario);
-            }
+            
 
         }
 

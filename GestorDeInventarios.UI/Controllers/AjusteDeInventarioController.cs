@@ -1,12 +1,6 @@
-﻿using Azure.Identity;
-using GestionDeInventario.BL;
-using GestionDeInventario.DA;
-using GestionDeInventarios.Model;
-using Microsoft.AspNetCore.Http;
+﻿using GestionDeInventarios.Model;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Org.BouncyCastle.Bcpg;
-using System.Net.Http;
 
 namespace GestorDeInventario.UI.Controllers
 {

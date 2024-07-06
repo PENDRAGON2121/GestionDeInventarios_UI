@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using GestionDeInventarios.Model;
+using GestorDeInventarios.UI.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using GestionDeInventarios.Model;
-using GestionDeInventario.BL;
-using GestorDeInventarios.UI.Models;
-using Microsoft.VisualBasic;
 using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace GestorDeInventario.UI.Controllers
 {
