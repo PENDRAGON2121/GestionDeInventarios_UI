@@ -16,6 +16,9 @@ CREATE TABLE Users (
     BlockedUntil DATETIME NULL
 );
 
+ALTER TABLE Users
+ADD Suscrito BIT DEFAULT 0;
+
 CREATE TABLE Inventarios (
     Id INT PRIMARY KEY IDENTITY,
     Nombre NVARCHAR(100),
@@ -76,8 +79,8 @@ CREATE TABLE VentaDetalle (
 );
 
 
-INSERT INTO Users(OauthID, Name, Email, Password, Role, LoginAttempts, IsBlocked, BlockedUntil)
-VALUES (NULL, 'Administrador', 'PPGR.GestorDeInventario.2024@gmail.com', 'Nuevo123*', 1, 0, 0, NULL);
+INSERT INTO Users (OauthID, Name, Email, Password, Role, LoginAttempts, IsBlocked, BlockedUntil, Suscrito)
+VALUES (NULL, 'Administrador', 'PPGR.GestorDeInventario.2024@gmail.com', 'Nuevo123*', 1, 0, 0, NULL, 1);
 
   
 ```
