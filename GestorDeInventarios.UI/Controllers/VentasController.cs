@@ -3,20 +3,14 @@ using GestionDeInventario.DA;
 using GestionDeInventarios.Model;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net.Http;
 using System.Text.Json;
 
 namespace GestorDeInventario.UI.Controllers
 {
     public class VentasController : Controller
     {
-        private readonly GestionDeLasVentas _GestionDeLasVentas;
-        private readonly AdministracionDeInventario _GestionDeInventario;
-
-        public VentasController(DbGestionDeInventario conexion)
-        {
-            _GestionDeLasVentas = new GestionDeLasVentas(conexion);
-            _GestionDeInventario = new AdministracionDeInventario(conexion);
-        }
+ 
 
         public async Task<ActionResult> Index()
         {
@@ -71,8 +65,6 @@ namespace GestorDeInventario.UI.Controllers
             return View(nuevaVenta);
         }
 
-        //TODO: FINALIZAR ESTE MODULO DE VENTAS
-
         //TODO: PARA MI-> REALIZAR EL MODULO DE ACEPTACION DEL ADMIN AL SUSCRIP TAMBIEN SU VIEW Y AÑADIR UN CAMPO EN LA TABLA DE USUARIOS
 
         [HttpPost]
@@ -92,7 +84,11 @@ namespace GestorDeInventario.UI.Controllers
                 venta.IdAperturaDeCaja = aperturaCaja.Id;
                 venta.UserId = aperturaCaja.UserId;
 
-                _GestionDeLasVentas.RegistrarVenta(venta);
+                string json = JsonConvert.SerializeObject(venta);
+                var buffer = System.Text.Encoding.UTF8.GetBytes(json);
+                var byteContent = new ByteArrayContent(buffer);
+                byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                await httpClient.PostAsync("https://localhost:7218/api/Ventas", byteContent);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -102,58 +98,105 @@ namespace GestorDeInventario.UI.Controllers
             }
         }
 
-        public ActionResult Terminar(Ventas ventaTemporal, List<GestionDeInventarios.Model.Inventario> carritoCompra, int ventaId)
+        public async Task<ActionResult>Terminar(Ventas ventaTemporal, List<GestionDeInventarios.Model.Inventario> carritoCompra, int ventaId)
         {
-            _GestionDeLasVentas.TerminarLaVenta(ventaTemporal.Id, carritoCompra);
+
+            var httpClient = new HttpClient();
+
+            string json = JsonConvert.SerializeObject(carritoCompra);
+            var buffer = System.Text.Encoding.UTF8.GetBytes(json);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            await httpClient.PostAsync($"https://localhost:7218/api/Ventas/{ventaTemporal.Id}", byteContent);
+
+
             TempData["IdVenta"] = ventaId;
 
             return RedirectToAction(nameof(Index));
         }
 
-        public ActionResult MostrarInventario(int ventaId)
+        public async Task<ActionResult>MostrarInventario(int ventaId)
         {
 
+
+            var httpClient = new HttpClient();
             List<GestionDeInventarios.Model.Inventario> laListaDelInventario;
-            laListaDelInventario = _GestionDeLasVentas.ObtengaLaListaDeInventarios();
+
+            var respuesta = await httpClient.GetAsync("https://localhost:7218/api/Inventario");
+            
+            string apiResponse = await respuesta.Content.ReadAsStringAsync();
+            laListaDelInventario = JsonConvert.DeserializeObject<List<Inventario>>(apiResponse);
 
             return View(laListaDelInventario);
         }
 
-        public ActionResult MostrarCarrito(int ventaId)
+        public async Task<ActionResult> MostrarCarrito(int ventaId)
         {
             if (ventaId != 0)
             {
                 Response.Cookies.Append("ventaId", ventaId.ToString());
             }
             List<GestionDeInventarios.Model.Inventario> carritoCompras;
-            carritoCompras = _GestionDeLasVentas.ObtengaElCarrito();
+
+            var httpClient = new HttpClient();
+
+            var respuesta = await httpClient.GetAsync("https://localhost:7218/api/Ventas/ObtenerElCarrito");
+
+            string apiResponse = await respuesta.Content.ReadAsStringAsync();
+            carritoCompras = JsonConvert.DeserializeObject<List<Inventario>>(apiResponse);
+
+
 
             return View(carritoCompras);
         }
 
-        public ActionResult AgregaAlCarrito(Inventario inventarios)
+        public async Task<ActionResult> AgregaAlCarrito(Inventario inventarios)
         {
-            List<Inventario> carritoComprasTemp = _GestionDeLasVentas.AgregarItemAlCarrito(inventarios);
+
+            var httpClient = new HttpClient();
+            string json = JsonConvert.SerializeObject(inventarios);
+            var buffer = System.Text.Encoding.UTF8.GetBytes(json);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            var respuesta = await httpClient.PostAsync("https://localhost:7218/api/Ventas/AgregarAlCarrito", byteContent);
+            string apiResponse = await respuesta.Content.ReadAsStringAsync();
+
+            List<Inventario> carritoComprasTemp;
+            carritoComprasTemp = JsonConvert.DeserializeObject<List<Inventario>>(apiResponse);
+
             return RedirectToAction(nameof(MostrarCarrito), new { ventaId = TempData["IdVenta"] });
         }
 
-        public ActionResult BorrarDelCarrito(int id)
+        public async Task<ActionResult>BorrarDelCarrito(int id)
         {
-            List<Inventario> carritoCompras = _GestionDeLasVentas.ObtengaElCarrito();
+
+            List<Inventario> carritoCompras;
+            var httpClient = new HttpClient();
+            var respuesta = await httpClient.GetAsync("https://localhost:7218/api/Ventas/ObtenerElCarrito");
+            string apiResponse = await respuesta.Content.ReadAsStringAsync();
+            carritoCompras = JsonConvert.DeserializeObject<List<Inventario>>(apiResponse);
+
             if (carritoCompras != null)
             {
                 var item = carritoCompras.FirstOrDefault(x => x.Id == id);
                 if (item != null)
                 {
                     carritoCompras.Remove(item);
-                    _GestionDeLasVentas.ActualiceElCarrito(carritoCompras);
+
+
+                    string json = JsonConvert.SerializeObject(carritoCompras);
+                    var buffer = System.Text.Encoding.UTF8.GetBytes(json);
+                    var byteContent = new ByteArrayContent(buffer);
+                    byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                    await httpClient.PostAsync("https://localhost:7218/api/Ventas/ActualiceElCarrito", byteContent);
+
                 }
             }
             return RedirectToAction(nameof(MostrarCarrito), new { ventaId = TempData["IdVenta"] });
         }
 
         [HttpPost]
-        public IActionResult TerminarVenta(int _ventaId, List<Inventario> carritoCompras, List<int> listaCantidades)
+        public async Task<IActionResult> TerminarVenta(int _ventaId, List<Inventario> carritoCompras, List<int> listaCantidades)
         {
             int indice = 0;
 
@@ -163,7 +206,12 @@ namespace GestorDeInventario.UI.Controllers
 
                 try
                 {
-                    var venta = _GestionDeLasVentas.ObtenerVentaPorId(ventaId);
+                    var httpClient = new HttpClient();
+                    var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/Ventas/VentaPorId/{ventaId}");
+                    string apiResponse = await respuesta.Content.ReadAsStringAsync();
+                    var venta = JsonConvert.DeserializeObject<Ventas>(apiResponse);
+
+
                     
                     indice = 0;
                     if (venta != null)
@@ -175,7 +223,7 @@ namespace GestorDeInventario.UI.Controllers
                             indice++;
                         }
                         venta.Total = total;
-                        _GestionDeLasVentas.ActualizarVenta(venta);
+
                     }
                     indice = 0;
                     if (venta != null)
@@ -187,17 +235,40 @@ namespace GestorDeInventario.UI.Controllers
                             indice++;
                         }
                         venta.SubTotal = subtotal;
-                        _GestionDeLasVentas.ActualizarVenta(venta);
                     }
+
+                    string json = JsonConvert.SerializeObject(venta);
+                    var buffer = System.Text.Encoding.UTF8.GetBytes(json);
+                    var byteContent = new ByteArrayContent(buffer);
+                    byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                    var ponse = await httpClient.PutAsync("https://localhost:7218/api/Ventas", byteContent);
+
 
                     indice = 0;
                     foreach (var item in carritoCompras)
                     {
-                        var inventario = _GestionDeInventario.ObtengaElInventarioPorIdentificacion(item.Id);
+
+                        var resp= await httpClient.GetAsync($"https://localhost:7218/api/Inventario/{item.Id}");
+                        string apiResp= await resp.Content.ReadAsStringAsync();
+                        Inventario inventario = JsonConvert.DeserializeObject<GestionDeInventarios.Model.Inventario>(apiResp);
+
+
+                        
+
+
+
                         if (inventario != null)
                         {
                             inventario.Cantidad -= listaCantidades[indice];
-                            _GestionDeInventario.ActualiceElInventario(inventario);
+
+
+                            string jsons = JsonConvert.SerializeObject(inventario);
+                            var bufferr = System.Text.Encoding.UTF8.GetBytes(jsons);
+                            var byteContentt = new ByteArrayContent(bufferr);
+                            byteContentt.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                            var respuestas = await httpClient.PutAsync("https://localhost:7218/api/Inventario/Actualice", byteContentt);
+
+                            //_GestionDeInventario.ActualiceElInventario(inventario);
                         }
                         indice++;
                     }
@@ -224,7 +295,7 @@ namespace GestorDeInventario.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult DescuentoYPago(Ventas ventaTemp)
+        public async Task<IActionResult>DescuentoYPago(Ventas ventaTemp)
         {
             if (Request.Cookies.TryGetValue("ventaId", out string ventaIdCookie))
             {
@@ -232,7 +303,14 @@ namespace GestorDeInventario.UI.Controllers
 
                 try
                 {
-                    var venta = _GestionDeLasVentas.ObtenerVentaPorId(ventaId);
+
+                    var httpClient = new HttpClient();
+                    var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/Ventas/ObtenerVentaPorId/{ventaId}");
+                    string apiResponse = await respuesta.Content.ReadAsStringAsync();
+                    var venta = JsonConvert.DeserializeObject<Ventas>(apiResponse);
+
+                    //var venta = _GestionDeLasVentas.ObtenerVentaPorId(ventaId);
+                    
                     if (venta != null) {
                         venta.PorcentajeDescuento = ventaTemp.PorcentajeDescuento;
                         decimal porcentaje = ventaTemp.PorcentajeDescuento / 100m;
@@ -242,7 +320,15 @@ namespace GestorDeInventario.UI.Controllers
                         venta.Total = venta.SubTotal - montoDescuento;
                         venta.Estado = EstadoDeVenta.Terminada;
                         venta.TipoDePago = ventaTemp.TipoDePago;
-                        _GestionDeLasVentas.ActualizarVenta(venta);
+
+
+                        string json = JsonConvert.SerializeObject(venta);
+                        var buffer = System.Text.Encoding.UTF8.GetBytes(json);
+                        var byteContent = new ByteArrayContent(buffer);
+                        byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                        var r = await httpClient.PutAsync("https://localhost:7218/api/Ventas", byteContent);
+
+                        //_GestionDeLasVentas.ActualizarVenta(venta);
                     }
 
                     return RedirectToAction("Index");

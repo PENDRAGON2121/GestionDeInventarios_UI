@@ -5,10 +5,6 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 
-//base de datos
-var connectionString = builder.Configuration.GetConnectionString("DefaultConection");
-builder.Services.AddDbContext<DbGestionDeInventario>(x => x.UseSqlServer(connectionString));
-
 // Servicio de autenticacion
 builder.Services.AddHttpContextAccessor();
 

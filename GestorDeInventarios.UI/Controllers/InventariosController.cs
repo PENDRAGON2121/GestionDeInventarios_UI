@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using GestionDeInventario.BL;
-using GestionDeInventario.DA;
 using GestionDeInventarios.Model;
 using Newtonsoft.Json;
 using System.Net.Http;
