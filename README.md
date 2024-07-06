@@ -16,6 +16,9 @@ CREATE TABLE Users (
     BlockedUntil DATETIME NULL
 );
 
+ALTER TABLE Users
+ADD Suscrito BIT DEFAULT 0;
+
 CREATE TABLE Inventarios (
     Id INT PRIMARY KEY IDENTITY,
     Nombre NVARCHAR(100),
