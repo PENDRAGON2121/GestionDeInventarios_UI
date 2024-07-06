@@ -2,6 +2,7 @@
 using GestionDeInventario.DA;
 using GestionDeInventarios.Model;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Text.Json;
 
 namespace GestorDeInventario.UI.Controllers
@@ -17,14 +18,23 @@ namespace GestorDeInventario.UI.Controllers
             _GestionDeInventario = new AdministracionDeInventario(conexion);
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
+            HttpClient httpClient = new HttpClient();
+            
+            
             List<GestionDeInventarios.Model.Ventas> laListaDeVentas;
-            laListaDeVentas = _GestionDeLasVentas.ObtengaLaListaDeVentas();
 
-            Boolean cajaAbierta = _GestionDeInventario.TieneAperturaDeCaja(User.Identity.Name);
+            var respuesta = await httpClient.GetAsync("https://localhost:7218/api/Ventas");
+            string apiResponse = await respuesta.Content.ReadAsStringAsync();
+            laListaDeVentas = JsonConvert.DeserializeObject<List<Ventas>>(apiResponse);
 
-            if (!cajaAbierta)
+            var resp = await httpClient.GetAsync($"https://localhost:7218/api/AperturaDeCaja/TieneApertura/{User.Identity.Name}");
+            string apertura = await resp.Content.ReadAsStringAsync();
+
+            Boolean tieneApertura = bool.Parse(apertura);
+
+            if (!tieneApertura)
             {
                 TempData["Mensaje"] = "No hay una caja abierta, por favor abra una caja para poder realizar ventas";
                 return RedirectToAction("index", "AperturaDeCaja");
@@ -33,9 +43,13 @@ namespace GestorDeInventario.UI.Controllers
             return View(laListaDeVentas);
         }
 
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            AperturaDeLaCaja aperturaCaja = _GestionDeInventario.ObtengaLaUltimaAperturaDeCaja();
+
+            var httpClient = new HttpClient();
+            var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/AperturaDeCaja/UltimaApertura");
+            string apiResponse = await respuesta.Content.ReadAsStringAsync();
+            AperturaDeLaCaja aperturaCaja = JsonConvert.DeserializeObject<AperturaDeLaCaja>(apiResponse);
 
             var nuevaVenta = new Ventas
             {
@@ -46,20 +60,34 @@ namespace GestorDeInventario.UI.Controllers
                 Estado = EstadoDeVenta.Pendiente
             };
 
-            List<Inventario> laListaDeInventario = _GestionDeInventario.ObtengaLaLista();
+            List<GestionDeInventarios.Model.Inventario> laListaDelInventario;
+
+            var resp = await httpClient.GetAsync("https://localhost:7218/api/Inventario");
+            string apiResp = await resp.Content.ReadAsStringAsync();
+            List<Inventario> laListaDeInventario = JsonConvert.DeserializeObject<List<Inventario>>(apiResp);
 
             ViewData["Inventario"] = laListaDeInventario;
 
             return View(nuevaVenta);
         }
 
+        //TODO: FINALIZAR ESTE MODULO DE VENTAS
+
+        //TODO: PARA MI-> REALIZAR EL MODULO DE ACEPTACION DEL ADMIN AL SUSCRIP TAMBIEN SU VIEW Y AÑADIR UN CAMPO EN LA TABLA DE USUARIOS
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(GestionDeInventarios.Model.Ventas venta)
+        public async Task<ActionResult> Create(GestionDeInventarios.Model.Ventas venta)
         {
             try
             {
-                AperturaDeLaCaja aperturaCaja = _GestionDeInventario.ObtengaLaUltimaAperturaDeCaja();
+
+                var httpClient = new HttpClient();
+                var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/AperturaDeCaja/UltimaApertura");
+                string apiResponse = await respuesta.Content.ReadAsStringAsync();
+                AperturaDeLaCaja aperturaCaja = JsonConvert.DeserializeObject<AperturaDeLaCaja>(apiResponse);
+
+                
 
                 venta.IdAperturaDeCaja = aperturaCaja.Id;
                 venta.UserId = aperturaCaja.UserId;
