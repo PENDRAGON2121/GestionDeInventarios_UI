@@ -16,7 +16,7 @@ namespace GestorDeInventario.UI.Controllers
                 var httpClient = new HttpClient();
                 List<GestionDeInventarios.Model.Inventario> laListaDelInventario;
 
-                var respuesta = await httpClient.GetAsync("https://localhost:7218/api/Inventario");
+                var respuesta = await httpClient.GetAsync("https://apigestiondeinventario.azurewebsites.net/api/Inventario");
                 string apiResponse = await respuesta.Content.ReadAsStringAsync();
                 laListaDelInventario = JsonConvert.DeserializeObject<List<Inventario>>(apiResponse);
                 return View(laListaDelInventario);
@@ -26,7 +26,7 @@ namespace GestorDeInventario.UI.Controllers
                 var httpClient = new HttpClient();
                 List<GestionDeInventarios.Model.Inventario> laListaDelInventarioPorNombre;
 
-                var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/Inventario/PorNombre/{nombre}");
+                var respuesta = await httpClient.GetAsync($"https://apigestiondeinventario.azurewebsites.net/api/Inventario/PorNombre/{nombre}");
                     string apiResponse = await respuesta.Content.ReadAsStringAsync();
                     laListaDelInventarioPorNombre = JsonConvert.DeserializeObject<List<GestionDeInventarios.Model.Inventario>>(apiResponse);
                     return View(laListaDelInventarioPorNombre);
@@ -40,12 +40,12 @@ namespace GestorDeInventario.UI.Controllers
             List<GestionDeInventarios.Model.HistorialDeInventario> historialDeCambios;
 
             var httpClient = new HttpClient();
-            var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/Inventario/{id}");
+            var respuesta = await httpClient.GetAsync($"https://apigestiondeinventario.azurewebsites.net/api/Inventario/{id}");
             string apiResponse = await respuesta.Content.ReadAsStringAsync();
             inventarios = JsonConvert.DeserializeObject<GestionDeInventarios.Model.Inventario>(apiResponse);
 
 
-            var respuestaHistorial = await httpClient.GetAsync($"https://localhost:7218/api/Inventario/Historial/{id}");
+            var respuestaHistorial = await httpClient.GetAsync($"https://apigestiondeinventario.azurewebsites.net/api/Inventario/Historial/{id}");
             string apiResponseHistorial = await respuestaHistorial.Content.ReadAsStringAsync();
             historialDeCambios = JsonConvert.DeserializeObject<List<GestionDeInventarios.Model.HistorialDeInventario>>(apiResponseHistorial);
             
@@ -72,7 +72,7 @@ namespace GestorDeInventario.UI.Controllers
                 var buffer = System.Text.Encoding.UTF8.GetBytes(json);
                 var byteContent = new ByteArrayContent(buffer);
                 byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                var respuesta = await httpClient.PostAsync("https://localhost:7218/api/Inventario", byteContent);
+                var respuesta = await httpClient.PostAsync("https://apigestiondeinventario.azurewebsites.net/api/Inventario", byteContent);
 
 
                 return RedirectToAction(nameof(Index));
@@ -90,7 +90,7 @@ namespace GestorDeInventario.UI.Controllers
             GestionDeInventarios.Model.InventariosEditar inventariosEditar = new GestionDeInventarios.Model.InventariosEditar();
 
             var httpClient = new HttpClient();
-            var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/Inventario/{id}");
+            var respuesta = await httpClient.GetAsync($"https://apigestiondeinventario.azurewebsites.net/api/Inventario/{id}");
             string apiResponse = await respuesta.Content.ReadAsStringAsync();
             inventarios = JsonConvert.DeserializeObject<GestionDeInventarios.Model.Inventario>(apiResponse);
             
@@ -116,7 +116,7 @@ namespace GestorDeInventario.UI.Controllers
                 var buffer = System.Text.Encoding.UTF8.GetBytes(json);
                 var byteContent = new ByteArrayContent(buffer);
                 byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                var respuesta = await httpClient.PutAsync("https://localhost:7218/api/Inventario", byteContent);
+                var respuesta = await httpClient.PutAsync("https://apigestiondeinventario.azurewebsites.net/api/Inventario", byteContent);
 
                 return RedirectToAction(nameof(Index));
             }

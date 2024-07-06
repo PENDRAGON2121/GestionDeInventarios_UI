@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Security.Claims;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace GestorDeInventario.UI.Controllers
 {
@@ -15,6 +16,11 @@ namespace GestorDeInventario.UI.Controllers
         
         public IActionResult Index()
         {
+            var message = TempData["Message"] as string;
+            if (message == "NoSuscrito")
+            {
+                ModelState.AddModelError(string.Empty, "El Usuario No Esta suscrito, Espere a que el Administrador lo Verifique");
+            }
             return View();
         }
 
@@ -39,7 +45,7 @@ namespace GestorDeInventario.UI.Controllers
             var buffer = System.Text.Encoding.UTF8.GetBytes(json);
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var respuesta = await httpClient.PostAsync("https://localhost:7218/api/Usuarios/Registre", byteContent);
+            var respuesta = await httpClient.PostAsync("https://apigestiondeinventario.azurewebsites.net/api/Usuarios/Registre", byteContent);
 
             return RedirectToAction("Index", "login");
         }
@@ -55,13 +61,18 @@ namespace GestorDeInventario.UI.Controllers
             var buffer = System.Text.Encoding.UTF8.GetBytes(json);
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var respuesta = await httpClient.PostAsync("https://localhost:7218/api/Usuarios/ObtengaElInicioDeSesion", byteContent);
+            var respuesta = await httpClient.PostAsync("https://apigestiondeinventario.azurewebsites.net/api/Usuarios/ObtengaElInicioDeSesion", byteContent);
 
             //Deserializacion de la respuesta
             string apiResponse = await respuesta.Content.ReadAsStringAsync(); 
             Usuario? _usuario= JsonConvert.DeserializeObject<Usuario>(apiResponse);
 
             
+            if (_usuario.Suscrito == false && _usuario.Role != Rol.Admin) 
+            {
+                ModelState.AddModelError(string.Empty, "El Usuario No Esta suscrito, Espere a que el Administrador lo Verifique");
+                return View();
+            }
 
             if (_usuario.Email is null)
             {
@@ -75,7 +86,7 @@ namespace GestorDeInventario.UI.Controllers
 
                 return View();
             }
-            String role = _usuario.Role.ToString();
+            string role = _usuario.Role.ToString();
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, _usuario.Name),
@@ -122,7 +133,7 @@ namespace GestorDeInventario.UI.Controllers
             var buffer = System.Text.Encoding.UTF8.GetBytes(json);
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var respuesta = await httpClient.PostAsync("https://localhost:7218/api/Usuarios/Actualice", byteContent);
+            var respuesta = await httpClient.PostAsync("https://apigestiondeinventario.azurewebsites.net/api/Usuarios/Actualice", byteContent);
 
             //respuesta es ok
             if (respuesta.IsSuccessStatusCode)
@@ -173,13 +184,31 @@ namespace GestorDeInventario.UI.Controllers
             var buffer = System.Text.Encoding.UTF8.GetBytes(json);
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var respuesta = await httpClient.PostAsync("https://localhost:7218/api/Usuarios/InicioDeSesionConOAuth", byteContent);
+            var respuesta = await httpClient.PostAsync("https://apigestiondeinventario.azurewebsites.net/api/Usuarios/InicioDeSesionConOAuth", byteContent);
 
-            //respuesta es ok
-            if (respuesta.IsSuccessStatusCode)
+            //TODO: Verificar que el usuario este suscrito
+
+
+            Usuario usuario = new Usuario
             {
-                return RedirectToAction("Index", "Home");
+                OauthID = _usuario.IdOauth
+            };
+
+            var resp = await httpClient.GetAsync($"https://apigestiondeinventario.azurewebsites.net/api/Usuarios/VerifiqueLaSuscripcionDelUsuarioOAuth/{usuario.OauthID}");
+            string apertura = await resp.Content.ReadAsStringAsync();
+
+            bool Suscrito = bool.Parse(apertura);
+
+            if (Suscrito == false)
+            {
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             }
+            else 
+            {
+               return RedirectToAction("Index", "Home");
+            }
+
+            TempData["Message"] = "NoSuscrito";
             return RedirectToAction("Index", "login");
 
         }
@@ -221,14 +250,24 @@ namespace GestorDeInventario.UI.Controllers
             var buffer = System.Text.Encoding.UTF8.GetBytes(json);
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var respuesta = await httpClient.PostAsync("https://localhost:7218/api/Usuarios/InicioDeSesionConOAuth", byteContent);
+            var respuesta = await httpClient.PostAsync("https://apigestiondeinventario.azurewebsites.net/api/Usuarios/InicioDeSesionConOAuth", byteContent);
 
-            //respuesta es ok
-            if (respuesta.IsSuccessStatusCode)
+
+            var resp = await httpClient.GetAsync($"https://apigestiondeinventario.azurewebsites.net/api/Usuarios/VerifiqueLaSuscripcionDelUsuarioOAuth/{_usuario.IdOauth}");
+            string apertura = await resp.Content.ReadAsStringAsync();
+
+            bool Suscrito = bool.Parse(apertura);
+
+            if (Suscrito == false)
             {
-            return RedirectToAction("Index", "Home");
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
             }
 
+            TempData["Message"] = "NoSuscrito";
             return RedirectToAction("Index", "login");
 
         }

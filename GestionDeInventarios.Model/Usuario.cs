@@ -22,5 +22,6 @@ namespace GestionDeInventarios.Model
         public int? LoginAttempts { get; set; } = 0;
         public Boolean? IsBlocked { get; set; } = false;
         public DateTime? BlockedUntil { get; set; }
+        public Boolean? Suscrito { get; set; } = false;
     }
 }

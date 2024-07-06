@@ -7,6 +7,8 @@
         var userId = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 
 
+        @if (HttpContextAccessor.HttpContext.User.Identity.Name != "Administrador")
+        {
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="Inventarios" asp-action="Index">Catalogo del Inventarios</a>
         </li>
@@ -18,7 +20,16 @@
         </li>
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="Ventas" asp-action="Index">Manejo de Ventas</a>
-        </li>
+            </li>
+        }
+        @if (HttpContextAccessor.HttpContext.User.Identity.Name == "Administrador")
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="PanelAdministrador" asp-action="Index">LISTA DE SUSCRIPCIONES PENDIENTES</a>
+            </li>
+
+        }
+
 
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-dark" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -39,4 +50,5 @@
         </li>
 
     }
+    
 </ul>

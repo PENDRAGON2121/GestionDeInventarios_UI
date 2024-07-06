@@ -1,0 +1,36 @@
+﻿@model IEnumerable<GestionDeInventarios.Model.Usuario>
+
+@{
+    ViewData["Title"] = "Lista de Usuarios Por Aceptar";
+}
+
+<div class="container mt-5">
+    <h1 class="mb-4">@ViewData["Title"]</h1>
+
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.ID)</th>
+                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                <th>@Html.DisplayNameFor(model => model.Email)</th>
+                <th>@Html.DisplayNameFor(model => model.Suscrito)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Suscrito)</td>
+                    <td>
+                        <a asp-action="RealizarSuscripcion" asp-route-id="@item.ID" class="btn btn-primary btn-sm">Aceptar Suscripción</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -21,7 +21,7 @@ namespace GestorDeInventario.UI.Controllers
             }
 
             HttpClient httpClient = new HttpClient();
-            var resp = await httpClient.GetAsync($"https://localhost:7218/api/AperturaDeCaja/TieneApertura/{ajuste.UserId}");
+            var resp = await httpClient.GetAsync($"https://apigestiondeinventario.azurewebsites.net/api/AperturaDeCaja/TieneApertura/{ajuste.UserId}");
             string apertura = await resp.Content.ReadAsStringAsync();
 
             Boolean tieneApertura = bool.Parse(apertura);
@@ -32,7 +32,7 @@ namespace GestorDeInventario.UI.Controllers
             
             List<AperturaDeLaCaja> laListaDelInventario;
 
-            var respuesta = await httpClient.GetAsync("https://localhost:7218/api/AperturaDeCaja");
+            var respuesta = await httpClient.GetAsync("https://apigestiondeinventario.azurewebsites.net/api/AperturaDeCaja");
             string apiResponse = await respuesta.Content.ReadAsStringAsync();
             laListaDelInventario = JsonConvert.DeserializeObject<List<AperturaDeLaCaja>>(apiResponse);
 
@@ -87,7 +87,7 @@ namespace GestorDeInventario.UI.Controllers
                 var buffer = System.Text.Encoding.UTF8.GetBytes(json);
                 var byteContent = new ByteArrayContent(buffer);
                 byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                var respuesta = await httpClient.PostAsync("https://localhost:7218/api/AperturaDeCaja", byteContent);
+                var respuesta = await httpClient.PostAsync("https://apigestiondeinventario.azurewebsites.net/api/AperturaDeCaja", byteContent);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -101,7 +101,7 @@ namespace GestorDeInventario.UI.Controllers
         {
 
             var httpClient = new HttpClient();
-            var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/AperturaDeCaja/{Id}");
+            var respuesta = await httpClient.GetAsync($"https://apigestiondeinventario.azurewebsites.net/api/AperturaDeCaja/{Id}");
             string apiResponse = await respuesta.Content.ReadAsStringAsync();
             AperturaDeLaCaja apertura = JsonConvert.DeserializeObject<AperturaDeLaCaja>(apiResponse);
 
@@ -112,7 +112,7 @@ namespace GestorDeInventario.UI.Controllers
         public async Task<ActionResult> CerrarLaCaja()
         {
             var httpClient = new HttpClient();
-            var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/AperturaDeCaja/UltimaApertura");
+            var respuesta = await httpClient.GetAsync($"https://apigestiondeinventario.azurewebsites.net/api/AperturaDeCaja/UltimaApertura");
             string apiResponse = await respuesta.Content.ReadAsStringAsync();
             AperturaDeLaCaja apertura = JsonConvert.DeserializeObject<AperturaDeLaCaja>(apiResponse);
 
@@ -126,7 +126,7 @@ namespace GestorDeInventario.UI.Controllers
             AcumuladoDeVentas acumulado;
 
             var httpClient = new HttpClient();
-            var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/AperturaDeCaja/AcumuladoDeLaCaja/{id}");
+            var respuesta = await httpClient.GetAsync($"https://apigestiondeinventario.azurewebsites.net/api/AperturaDeCaja/AcumuladoDeLaCaja/{id}");
             string apiResponse = await respuesta.Content.ReadAsStringAsync();
             acumulado = JsonConvert.DeserializeObject<AcumuladoDeVentas>(apiResponse);
 
@@ -135,7 +135,7 @@ namespace GestorDeInventario.UI.Controllers
         public async Task<ActionResult> validarCierre(int id)
         {
             var httpClient = new HttpClient();
-            var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/AperturaDeCaja/CierreDeCaja");
+            var respuesta = await httpClient.GetAsync($"https://apigestiondeinventario.azurewebsites.net/api/AperturaDeCaja/CierreDeCaja");
             return RedirectToAction("Index");
 
 

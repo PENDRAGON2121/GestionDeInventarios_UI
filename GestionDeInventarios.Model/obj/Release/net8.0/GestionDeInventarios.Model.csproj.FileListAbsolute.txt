@@ -1,0 +1,13 @@
+C:\Users\mquir\source\repos\GestorDeInventarioFront\GestorDeInventario_FrontEnd\GestionDeInventarios.Model\bin\Release\net8.0\GestionDeInventarios.Model.deps.json
+C:\Users\mquir\source\repos\GestorDeInventarioFront\GestorDeInventario_FrontEnd\GestionDeInventarios.Model\bin\Release\net8.0\GestionDeInventarios.Model.dll
+C:\Users\mquir\source\repos\GestorDeInventarioFront\GestorDeInventario_FrontEnd\GestionDeInventarios.Model\bin\Release\net8.0\GestionDeInventarios.Model.pdb
+C:\Users\mquir\source\repos\GestorDeInventarioFront\GestorDeInventario_FrontEnd\GestionDeInventarios.Model\obj\Release\net8.0\GestionDeInventarios.Model.csproj.AssemblyReference.cache
+C:\Users\mquir\source\repos\GestorDeInventarioFront\GestorDeInventario_FrontEnd\GestionDeInventarios.Model\obj\Release\net8.0\GestionDeInventarios.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mquir\source\repos\GestorDeInventarioFront\GestorDeInventario_FrontEnd\GestionDeInventarios.Model\obj\Release\net8.0\GestionDeInventarios.Model.AssemblyInfoInputs.cache
+C:\Users\mquir\source\repos\GestorDeInventarioFront\GestorDeInventario_FrontEnd\GestionDeInventarios.Model\obj\Release\net8.0\GestionDeInventarios.Model.AssemblyInfo.cs
+C:\Users\mquir\source\repos\GestorDeInventarioFront\GestorDeInventario_FrontEnd\GestionDeInventarios.Model\obj\Release\net8.0\GestionDeInventarios.Model.csproj.CoreCompileInputs.cache
+C:\Users\mquir\source\repos\GestorDeInventarioFront\GestorDeInventario_FrontEnd\GestionDeInventarios.Model\obj\Release\net8.0\GestionDeInventarios.Model.sourcelink.json
+C:\Users\mquir\source\repos\GestorDeInventarioFront\GestorDeInventario_FrontEnd\GestionDeInventarios.Model\obj\Release\net8.0\GestionDeInventarios.Model.dll
+C:\Users\mquir\source\repos\GestorDeInventarioFront\GestorDeInventario_FrontEnd\GestionDeInventarios.Model\obj\Release\net8.0\refint\GestionDeInventarios.Model.dll
+C:\Users\mquir\source\repos\GestorDeInventarioFront\GestorDeInventario_FrontEnd\GestionDeInventarios.Model\obj\Release\net8.0\GestionDeInventarios.Model.pdb
+C:\Users\mquir\source\repos\GestorDeInventarioFront\GestorDeInventario_FrontEnd\GestionDeInventarios.Model\obj\Release\net8.0\ref\GestionDeInventarios.Model.dll

@@ -15,7 +15,7 @@ namespace GestorDeInventario.UI.Controllers
                 var httpClient = new HttpClient();
                 List<GestionDeInventarios.Model.Inventario> laListaDelInventario;
 
-                var respuesta = await httpClient.GetAsync("https://localhost:7218/api/Inventario");
+                var respuesta = await httpClient.GetAsync("https://apigestiondeinventario.azurewebsites.net/api/Inventario");
                 string apiResponse = await respuesta.Content.ReadAsStringAsync();
                 laListaDelInventario = JsonConvert.DeserializeObject<List<Inventario>>(apiResponse);
                 return View(laListaDelInventario);
@@ -24,7 +24,7 @@ namespace GestorDeInventario.UI.Controllers
             {
                 var httpClient = new HttpClient();
                 List<GestionDeInventarios.Model.Inventario> laListaDelInventarioPorNombre;
-                var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/Inventario/PorNombre/{nombre}");
+                var respuesta = await httpClient.GetAsync($"https://apigestiondeinventario.azurewebsites.net/api/Inventario/PorNombre/{nombre}");
                 string apiResponse = await respuesta.Content.ReadAsStringAsync();
                 laListaDelInventarioPorNombre = JsonConvert.DeserializeObject<List<GestionDeInventarios.Model.Inventario>>(apiResponse);
                 return View(laListaDelInventarioPorNombre);
@@ -45,13 +45,13 @@ namespace GestorDeInventario.UI.Controllers
 
             var httpClient = new HttpClient();
 
-            var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/AjusteDelInventario/{id}");
+            var respuesta = await httpClient.GetAsync($"https://apigestiondeinventario.azurewebsites.net/api/AjusteDelInventario/{id}");
             string apiResponse = await respuesta.Content.ReadAsStringAsync();
             ajusteDeInventarios = JsonConvert.DeserializeObject<AjusteDeInventario>(apiResponse);
 
 
             int idUsuario = int.Parse(ajusteDeInventarios.UserId);
-            var resp = await httpClient.GetAsync($"https://localhost:7218/api/Usuarios/ObtenerNombreDelUsuarioPorId/{idUsuario}");
+            var resp = await httpClient.GetAsync($"https://apigestiondeinventario.azurewebsites.net/api/Usuarios/ObtenerNombreDelUsuarioPorId/{idUsuario}");
             string nombre = await resp.Content.ReadAsStringAsync();
             ajusteDeInventarios.UserId = nombre;
 
@@ -65,7 +65,7 @@ namespace GestorDeInventario.UI.Controllers
             GestionDeInventarios.Model.Inventario inventarios;
 
             var httpClient = new HttpClient();
-            var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/Inventario/{id}");
+            var respuesta = await httpClient.GetAsync($"https://apigestiondeinventario.azurewebsites.net/api/Inventario/{id}");
             string apiResponse = await respuesta.Content.ReadAsStringAsync();
             inventarios = JsonConvert.DeserializeObject<GestionDeInventarios.Model.Inventario>(apiResponse);
 
@@ -77,14 +77,14 @@ namespace GestorDeInventario.UI.Controllers
             List<GestionDeInventarios.Model.AjusteDeInventario> laListaDelInventario;
             HttpClient httpClient = new HttpClient();
 
-            var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/AjusteDelInventario/ListaPorId/{id}");
+            var respuesta = await httpClient.GetAsync($"https://apigestiondeinventario.azurewebsites.net/api/AjusteDelInventario/ListaPorId/{id}");
             string apiResponse = await respuesta.Content.ReadAsStringAsync();
             laListaDelInventario = JsonConvert.DeserializeObject<List<AjusteDeInventario>>(apiResponse);
 
 
             int _idDelUsuario = int.Parse(laListaDelInventario[0].UserId);
 
-            var resp = await httpClient.GetAsync($"https://localhost:7218/api/Usuarios/ObtenerNombreDelUsuarioPorId/{_idDelUsuario}");
+            var resp = await httpClient.GetAsync($"https://apigestiondeinventario.azurewebsites.net/api/Usuarios/ObtenerNombreDelUsuarioPorId/{_idDelUsuario}");
             string nombre = await resp.Content.ReadAsStringAsync();
             
             ViewBag.Nombre = nombre;
@@ -104,7 +104,7 @@ namespace GestorDeInventario.UI.Controllers
             GestionDeInventarios.Model.AjusteDeInventario ajusteDeInventarios = new GestionDeInventarios.Model.AjusteDeInventario();
 
             var httpClient = new HttpClient();
-            var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/Inventario/{id}");
+            var respuesta = await httpClient.GetAsync($"https://apigestiondeinventario.azurewebsites.net/api/Inventario/{id}");
             string apiResponse = await respuesta.Content.ReadAsStringAsync();
 
             inventarios = JsonConvert.DeserializeObject<GestionDeInventarios.Model.Inventario>(apiResponse);
@@ -131,7 +131,7 @@ namespace GestorDeInventario.UI.Controllers
             {
                 var httpClient = new HttpClient();
                 String usuario = User.Identity.Name;
-                var resp = await httpClient.GetAsync($"https://localhost:7218/api/AjusteDelInventario/ObtenerIdPorNombre/{usuario}");
+                var resp = await httpClient.GetAsync($"https://apigestiondeinventario.azurewebsites.net/api/AjusteDelInventario/ObtenerIdPorNombre/{usuario}");
                 var idDelUsuario = await resp.Content.ReadAsStringAsync();
 
                 
@@ -144,7 +144,7 @@ namespace GestorDeInventario.UI.Controllers
 
 
                 int idDelinventario = ajusteDeInventarios.Id;
-                var respuesta = await httpClient.GetAsync($"https://localhost:7218/api/Inventario/{idDelinventario}");
+                var respuesta = await httpClient.GetAsync($"https://apigestiondeinventario.azurewebsites.net/api/Inventario/{idDelinventario}");
                 string apiResponse = await respuesta.Content.ReadAsStringAsync();
                 inventarios = JsonConvert.DeserializeObject<GestionDeInventarios.Model.Inventario>(apiResponse);
 
@@ -165,7 +165,7 @@ namespace GestorDeInventario.UI.Controllers
                 var buffer = System.Text.Encoding.UTF8.GetBytes(json);
                 var byteContent = new ByteArrayContent(buffer);
                 byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                await httpClient.PostAsync("https://localhost:7218/api/AjusteDelInventario", byteContent);
+                await httpClient.PostAsync("https://apigestiondeinventario.azurewebsites.net/api/AjusteDelInventario", byteContent);
                 
                 return RedirectToAction(nameof(Index));
             }
